@@ -1,5 +1,5 @@
 export interface DropdownProps {
-    options: { value: number}[];
+    options:  number[];
     value: number;
     onChange: (value: number) => void;
   }

@@ -1,10 +1,11 @@
-
-import React from "react";
+import React from 'react';
+import ProductCategory from '../components/ProductCategory';
 
 const Home = () => {
   return (
-    <div className='bg-green-500 flex flex-grow'>
-      This is home    </div>
+    <div className='flex flex-col justify-center'>
+      <ProductCategory />
+    </div>
   );
 };
 

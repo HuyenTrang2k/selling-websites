@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Product } from '../model/productProps';
+import { ProductProps } from '../model/productProps';
 import Products from '../components/Products';
 import Pagination from '../components/pagination/pagination';
-import Dropdown from '../components/dropdown';
 
 const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
   const [totalItem, setTotalItem] = useState(0);
-  const [resetPage, setResetPage] = useState(false);
   const getProducts = async () => {
     try {
       const res = await axios.get('http://localhost:8000/v1/product');
@@ -18,15 +16,19 @@ const ProductList: React.FC = () => {
   };
   const [productsPerPage, setProductsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+  const [currentProducts, setCurrentProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     getProducts();
-    setCurrentPage(1);
   }, []);
 
   useEffect(() => {
+    const maxPage = Math.ceil(products.length / productsPerPage);
+    if (currentPage > maxPage) {
+      setCurrentPage(1);
+    }
     getCurrentProducts();
+    scrollToTop();
   }, [currentPage, products, productsPerPage]);
 
   const getCurrentProducts = () => {
@@ -36,21 +38,23 @@ const ProductList: React.FC = () => {
       indexOfFirstProduct,
       indexOfLastProduct
     );
-    console.log(currentPage);
     setCurrentProducts(currentProducts);
   };
+
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
   };
 
-
-  const handlePageSizeChange = (value) => {
-    setProductsPerPage(value)
-                  setCurrentPage(1)
-                  setResetPage(true);
+  const handlePageSizeChange = (value: number) => {
+    setProductsPerPage(value);
+    setCurrentPage(1);
   };
 
-  const options = [{ value: 10 }, { value: 20 }, { value: 30 }];
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
   return (
     <div className='bg-white h-full flex flex-col'>
       <div className='mx-auto lg:p-8 rounded-2xl max-w-7xl'>
@@ -63,19 +67,14 @@ const ProductList: React.FC = () => {
           <Pagination
             pageCount={Math.ceil(products.length / productsPerPage)}
             currentPage={currentPage}
-            resetPage={resetPage}
+            pageSize={productsPerPage}
             onPageChange={({ selected }: { selected: number }) =>
               handlePageChange({ selected })
             }
+            onSizeChange={(value) => {
+              handlePageSizeChange(value)
+            }}
           />
-          <div className='relative inline-block text-left mt-2'>
-              <Dropdown
-                options={options}
-                value={productsPerPage}
-                onChange={(value)=>{handlePageSizeChange(value)}
-                }
-              />
-            </div>
         </div>
       ) : null}
     </div>

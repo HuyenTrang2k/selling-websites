@@ -33,15 +33,15 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, onChange }) => {
           style={{bottom: '2.5rem'}}
         >
           {options.map((option) => (
-            <div className='py-1' role='none' key={option.value}>
+            <div className='py-1' role='none' key={option}>
               <a
                 href='#'
                 className='text-gray-700 block px-4 py-2 text-sm  hover:bg-blue-500 hover:text-white'
                 role='menuitem'
                 id='menu-item-0'
-                onClick={() => handleSelect(option.value)}
+                onClick={() => handleSelect(option)}
               >
-                {option.value}
+                {option}
               </a>
             </div>
           ))}

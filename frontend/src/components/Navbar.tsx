@@ -1,20 +1,36 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
-  { name: 'Team', href: '/login', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-];
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(' ');
 };
 
 const Navbar = () => {
-  const [currentNavItem, setCurrentNavItem] = useState(navigation[0].name);
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const navigation = [
+    { name: 'Home', link: '/', current: currentPath === '/' },
+    {
+      name: 'Products',
+      link: '/products',
+      current: currentPath === '/products',
+    },
+    { name: 'Team', link: '/login', current: currentPath === '/login' },
+    {
+      name: 'About us',
+      link: '/about-us',
+      current: currentPath === '/about-us',
+    },
+    { name: 'Contact', link: '/contact', current: currentPath === '/contact' },
+  ];
 
+  const navigate = useNavigate();
+  const handleNavLinkClick = (item) => {
+    item.current = true;
+    navigate(item.link);
+  };
   return (
     <Disclosure as='nav' className='bg-while'>
       {({ open }) => (
@@ -47,9 +63,8 @@ const Navbar = () => {
                 <div className='hidden sm:ml-6 sm:block align-center  flex-grow md:flex justify-center'>
                   <div className='flex space-x-4'>
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
                         className={classNames(
                           item.current
                             ? 'bg-gray-900 text-white'
@@ -57,9 +72,10 @@ const Navbar = () => {
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
+                        to={item.link}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -81,7 +97,7 @@ const Navbar = () => {
                       <img
                         className='h-12 w-12 rounded-full'
                         src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg'
-                         alt=''
+                        alt=''
                       />
                     </Menu.Button>
                   </div>
@@ -97,41 +113,41 @@ const Navbar = () => {
                     <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <NavLink
+                            to='/profile'
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                           >
                             Your Profile
-                          </a>
+                          </NavLink>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <NavLink
+                            to='/setting'
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                           >
                             Settings
-                          </a>
+                          </NavLink>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href='#'
+                          <NavLink
+                            to='signout'
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                           >
                             Sign out
-                          </a>
+                          </NavLink>
                         )}
                       </Menu.Item>
                     </Menu.Items>
@@ -147,20 +163,13 @@ const Navbar = () => {
                 <Disclosure.Button
                   key={item.name}
                   as='a'
-                  href={item.href}
+                  onClick={() => handleNavLinkClick(item)}
                   className={classNames(
-                    item.name === currentNavItem
+                    item.current
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
                   )}
-                  aria-current={
-                    item.name === currentNavItem ? 'page' : undefined
-                  }
-                  onChange={() => {
-                    setCurrentNavItem(item.name);
-                    console.log(currentNavItem);
-                  }}
                 >
                   {item.name}
                 </Disclosure.Button>
