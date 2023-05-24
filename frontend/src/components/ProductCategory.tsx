@@ -51,7 +51,7 @@ const ProductCategory = () => {
     <div className='flex flex-col justify-center text-center'>
           {category.map((cat) => (
       <div
-        className='p-8'
+        className='p-8 mb-4'
         style={{
           backgroundImage:
             'url(//cdn.tgdd.vn/mwgcart/mwg-site/ContentMwg/images/newyear2023/Background/xu-huong-mua-sam.png)',

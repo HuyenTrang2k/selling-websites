@@ -1,3 +1,5 @@
+import { ShowroomProps } from './model/showroomProps';
+
 export const sliderItem = [
   [
     {
@@ -65,7 +67,7 @@ export const categories = [
     cat: 'watch',
   },
 ];
-export const listShowrom = [
+export const listShowroom : ShowroomProps[] = [
   {
     id: 1,
     name: 'Cửa hàng Di Động NHAT SHOP',
