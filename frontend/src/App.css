@@ -2,3 +2,73 @@ html
 {
   min-width: 300px
 }
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.pine-tree {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: -1;
+}
+
+.pine-tree img {
+  width: 10%;
+}
+
+.pine-tree-left {
+  position: absolute;
+  bottom: 0;
+  left: 1vw;
+  cursor: pointer;
+  animation: lighting 1s infinite;
+  transform: matrix(-0.99, -0.14, -0.14, 0.99, 0, 0);
+  z-index: 2;
+}
+
+.pine-tree-right {
+  position: absolute;
+  bottom: 0;
+  right: 1vw;
+  cursor: pointer;
+  animation: lighting 1s infinite;
+  transform: rotate(-8.21deg);
+  z-index: 2;
+}
+
+.pine-tree .santa-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 2;
+  width: 6vw;
+}
+
+.pine-tree .santa-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 2;
+  width: 3vw;
+}
+
+@keyframes lighting {
+   0% {
+    content: url("./assets/images/light-pine-tree.png");
+  }
+  100% {
+    content: url("./assets/images/pine-tree.png");
+  }
+}

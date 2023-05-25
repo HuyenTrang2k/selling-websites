@@ -2,6 +2,8 @@ import { FC } from 'react';
 import GoogleMapReact from 'google-map-react';
 import React from 'react';
 import { ShowroomProps } from '../model/showroomProps';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 interface GoogleMapsProps {
   location: ShowroomProps | null;
 }
@@ -49,7 +51,7 @@ const GoogleMaps: FC<GoogleMapsProps> = ({ location }) => {
         </Position>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: process.env.REACT_APP_API_MAPS_KEY,
+            key: import.meta.env.VITE_APP_API_MAPS_KEY,
           }}
           defaultCenter={defaultProps.center}
           defaultZoom={defaultProps.zoom}
@@ -61,15 +63,10 @@ const GoogleMaps: FC<GoogleMapsProps> = ({ location }) => {
               lat={location?.center?.lat}
               lng={location?.center?.lng}
               icon={
-                <i
-                  className='fa-sharp fa-solid fa-location-dot'
-                  style={{
-                    color: '#e30000',
-                    fontSize: '30px',
-                    top: 0,
-                    left: 0,
-                  }}
-                ></i>
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  style={{ color: '#e30000', fontSize: '30px' }}
+                />
               }
             ></Marker>
           ) : null}

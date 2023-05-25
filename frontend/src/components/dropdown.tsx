@@ -26,7 +26,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, onChange }) => {
       </div>
       {isOpen && (
         <div
-          className='absolute right-0 z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md bg-white shadow-lg focus:outline-none'
+          className='w-[50px] absolute right-0 z-10 mt-2 divide-y divide-gray-100 rounded-md bg-white shadow-lg focus:outline-none'
           role='menu'
           aria-orientation='vertical'
           aria-labelledby='menu-button'

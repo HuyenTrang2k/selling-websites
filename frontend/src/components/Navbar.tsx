@@ -32,10 +32,10 @@ const Navbar = () => {
     navigate(item.link);
   };
   return (
-    <Disclosure as='nav' className='bg-while'>
+    <Disclosure as='nav' className='bg-white w-full'>
       {({ open }) => (
         <>
-          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
+          <div className='mx-autopx-2 sm:px-6 lg:px-8'>
             <div className='relative flex h-16 flex-row items-center justify-between'>
               <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                 <Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
@@ -64,18 +64,19 @@ const Navbar = () => {
                   <div className='flex space-x-4'>
                     {navigation.map((item) => (
                       <NavLink
-                        key={item.name}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                        to={item.link}
-                      >
-                        {item.name}
-                      </NavLink>
+                      key={item.name}
+                      className={classNames(
+                        item.current
+                          ? 'bg-gray-600 text-white' // Màu nền vàng và màu chữ trắng cho phần tử hiện tại
+                          : 'text-black hover:bg-gray-800 hover:text-white', // Màu chữ xám và màu nền xám nổi khi di chuột qua
+                        'rounded-md px-3 py-2 text-sm font-medium'
+                      )}
+                      aria-current={item.current ? 'page' : undefined}
+                      to={item.link}
+                    >
+                      {item.name}
+                    </NavLink>
+                    
                     ))}
                   </div>
                 </div>
