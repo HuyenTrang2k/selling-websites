@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -13,22 +12,22 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     const res = loginUser(dispatch, { username, password });
-    if (await res) navigate('/')
+    if (await res) navigate('/');
   };
 
   return (
     <div className='flex flex-1 flex-col h-screen bg-login2 bg-cover text-white'>
-      <div className='flex rounded-2xl shadow-lg p-5 items-center justify-center h-full flex-row gap-5 '>
-        <div className='w-[90%] h-[90%] bg-login flex bg-cover flex-col sm:flex-row rounded-2xl '>
+      <div className='flex rounded-2xl shadow-lg p-5 items-center justify-center h-full flex-row gap-5'>
+        <div className='w-[90%] h-[90%] bg-login flex bg-cover flex-col sm:flex-row rounded-2xl'>
           <div className='flex flex-1 lg:flex-[0.5] text-3xl h-30 text-center justify-center items-center'>
-            <p className='mt-4'> Wellcom to Trang shop</p>
+            <p className='mt-4'>Welcome to Trang shop</p>
           </div>
-          <div className='flex-1 lg:w-1/2 sm:w-2/3 px-8 md:px-16 w-full max-w-2xl rounded-2xl py-7 items-center align-items-center '>
+          <div className='flex-1 lg:w-1/2 sm:w-2/3 px-8 md:px-16 w-full max-w-2xl rounded-2xl py-7 items-center align-items-center'>
             <h2 className='mt-8 font-bold text-2xl text-center'>
               Login
             </h2>
 
-            <form action='' className='flex flex-col gap-4 text-black' >
+            <form action='' className='flex flex-col gap-4 text-black'>
               <input
                 className='p-2 mt-8 sm:mt-1 rounded-xl border'
                 type='email'

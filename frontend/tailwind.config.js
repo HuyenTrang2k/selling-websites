@@ -15,8 +15,13 @@ module.exports = {
         'login2': "url('/src/assets/2.jpg')",
       },
       backgroundSize: "cover",
-      
     },
   },
   plugins: [],
+  corePlugins: {
+    animation: false,
+  },
+  variants: {
+    animation: ['responsive', 'motion-safe', 'motion-reduce'],
+  },
 }

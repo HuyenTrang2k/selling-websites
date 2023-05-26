@@ -4,12 +4,13 @@ import React from 'react';
 import { ShowroomProps } from '../model/showroomProps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+
 interface GoogleMapsProps {
   location: ShowroomProps | null;
 }
 
 const GooogleMapWrapper = ({ children }) => (
-  <div className='w-full p-8 relative'>{children}</div>
+  <div className='w-full p-8 h-[450px] md:h-auto md:min-w-[30rem] md:min-h-[30rem] '>{children}</div>
 );
 
 const defaultProps = {
@@ -21,7 +22,7 @@ const defaultProps = {
 };
 
 const Position = ({ children }) => (
-  <div className='top-30 left-30 z-10 absolute max-w-250 bg-white p-10 shadow-md rounded-md text-sm'>
+  <div className='top-30 left-30 z-10 absolute max-w-250 bg-white p-4 max-w-[20rem] max-h-[30rem] shadow-md text-sm'>
     {children}
   </div>
 );
@@ -41,8 +42,9 @@ const Marker: FC<MarkerProps> = ({ icon, lat, lng, width }) => (
 interface GoogleMapsProps {
   location: ShowroomProps | null;
 }
-
 const GoogleMaps: FC<GoogleMapsProps> = ({ location }) => {
+  const apiKey = process.env.VITE_APP_API_KEY;
+
   return (
     <>
       <GooogleMapWrapper>
@@ -51,11 +53,12 @@ const GoogleMaps: FC<GoogleMapsProps> = ({ location }) => {
         </Position>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: import.meta.env.VITE_APP_API_MAPS_KEY,
+            key: apiKey
           }}
           defaultCenter={defaultProps.center}
           defaultZoom={defaultProps.zoom}
           center={location?.center}
+         
         >
           {location ? (
             <Marker

@@ -1,5 +1,4 @@
-html 
-{
+html {
   min-width: 300px
 }
 
@@ -12,6 +11,7 @@ html
     transform: rotate(360deg);
   }
 }
+
 .pine-tree {
   position: fixed;
   bottom: 0;
@@ -65,9 +65,10 @@ html
 }
 
 @keyframes lighting {
-   0% {
+  0% {
     content: url("./assets/images/light-pine-tree.png");
   }
+
   100% {
     content: url("./assets/images/pine-tree.png");
   }

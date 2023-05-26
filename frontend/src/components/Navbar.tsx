@@ -69,7 +69,7 @@ const Navbar = () => {
                         item.current
                           ? 'bg-gray-600 text-white' // Màu nền vàng và màu chữ trắng cho phần tử hiện tại
                           : 'text-black hover:bg-gray-800 hover:text-white', // Màu chữ xám và màu nền xám nổi khi di chuột qua
-                        'rounded-md px-3 py-2 text-sm font-medium'
+                        'rounded-md px-3 py-2 text-sm font-medium '
                       )}
                       aria-current={item.current ? 'page' : undefined}
                       to={item.link}

@@ -1,82 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { ProductProps } from '../model/productProps';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Products from '../components/Products';
-import Pagination from '../components/pagination/pagination';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<ProductProps[]>([]);
-  const [totalItem, setTotalItem] = useState(0);
-  const getProducts = async () => {
-    try {
-      const res = await axios.get('http://localhost:8000/v1/product');
-      setProducts(res.data);
-      setTotalItem(res.data.length);
-    } catch (err) {}
-  };
-  const [productsPerPage, setProductsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentProducts, setCurrentProducts] = useState<ProductProps[]>([]);
+const ProductList = () => {
+  const location = useLocation();
+  const cat = location.pathname.split('/')[2];
+  const [sort, setSort] = useState('newest');
+  const { search } = location;
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    const maxPage = Math.ceil(products.length / productsPerPage);
-    if (currentPage > maxPage) {
-      setCurrentPage(1);
+  const handlerTitle = (value) => {
+    switch (value) {
+      case 'laptop':
+        return 'Laptop';
+      case 'watch':
+        return 'Smartwatch';
+      case 'smartphone':
+        return 'Smartphone';
+      case 'tablet':
+        return 'Tablet';
+      case undefined: {
+        if (search) {
+          return 'Search';
+        } else {
+          return 'All Products';
+        }
+      }
     }
-    getCurrentProducts();
-    scrollToTop();
-  }, [currentPage, products, productsPerPage]);
-
-  const getCurrentProducts = () => {
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = products.slice(
-      indexOfFirstProduct,
-      indexOfLastProduct
-    );
-    setCurrentProducts(currentProducts);
   };
 
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setCurrentPage(selected + 1);
-  };
+  const [searchInput, setSearchInput] = useState('');
 
-  const handlePageSizeChange = (value: number) => {
-    setProductsPerPage(value);
-    setCurrentPage(1);
+  const handleSearch = (e) => {
+    setSearchInput(e.target.value);
   };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
 
   return (
-    <div className='bg-white h-full flex flex-col'>
-      <div className='mx-auto lg:p-8 rounded-2xl max-w-7xl'>
-        <h1 className='text-3xl font-bold mb-4 text-center'>Product List</h1>
-        <Products products={currentProducts} />
-      </div>
-
-      {products.length > 0 ? (
-        <div className='flex justify-center my-3 flex-grow items-center'>
-          <Pagination
-            pageCount={Math.ceil(products.length / productsPerPage)}
-            currentPage={currentPage}
-            pageSize={productsPerPage}
-            onPageChange={({ selected }: { selected: number }) =>
-              handlePageChange({ selected })
-            }
-            onSizeChange={(value) => {
-              handlePageSizeChange(value)
-            }}
-          />
+    <div className='flex flex-col flex-1 w-full text-center'>
+      <h1 className='m-4 text-3xl font-bold'>{handlerTitle(cat)}</h1>
+      <div className='flex justify-around items-center m-4 w-full'>
+        <div className='flex items-center'>
+          <span className='mr-4 font-semibold'>Sort Products:</span>
+          <select
+            className='px-4 py-2 mr-4'
+            onChange={(e) => setSort(e.target.value)}
+          >
+            <option value='newest'>Newest</option>
+            <option value='asc'>Price (asc)</option>
+            <option value='desc'>Price (desc)</option>
+          </select>
         </div>
-      ) : null}
+        <div className='flex items-center'>
+          <input
+            type='text'
+            placeholder='Search...'
+            className='px-4 py-2'
+            value={searchInput}
+            onChange={handleSearch}
+          />
+          <Link
+            to={`/products?search=${searchInput}`}
+            style={{ background: 'none', border: 'none', display: 'flex' }}
+          >
+            <i className='fas fa-search'></i>
+          </Link>
+        </div>
+      </div>
+      <Products cat={cat} sort={sort} search={search} />
     </div>
   );
 };

@@ -26,6 +26,7 @@ const ProductCategory = () => {
       setLoading(true);
       const resCat = await axios.get('http://localhost:8000/v1/category');
       setCategory(resCat.data);
+      console.log(resCat.data);
       setLoading(false);
     } catch (err) {}
   };
@@ -61,7 +62,7 @@ const ProductCategory = () => {
       >
         <h1 className='m-5 text-5xl font-bold text-white'>{cat.name}</h1>
         <div className='flex flex-row flex-wrap gap-4 p-8 pt-0'>
-        <Products products={handlerArrays(cat.name).slice(0, 5)} />
+        {/* <Products products={handlerArrays(cat.name).slice(0, 5)} /> */}
         </div>
         <Link
          to={`/products/${cat.name}`}
