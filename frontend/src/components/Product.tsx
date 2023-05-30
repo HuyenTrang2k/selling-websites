@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 const Product = ({ item }) => {
   return (
-    <div className='group relative p-3 bg-white max-w-xs xs:text-start text-center ma-h-350'>
+    <div className='group relative p-3 bg-white max-w-xs xs:text-start text-center max-h-350'>
       <NavLink to={`/product/${item.id}`} className='group block'>
         <div className='overflow-hidden rounded-md lg:h-[15rem] transition-all duration-300 ease-in-out transform group-hover:scale-[1.08]'>
           <img

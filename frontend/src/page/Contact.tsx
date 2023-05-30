@@ -99,7 +99,7 @@ const Contact = () => {
                   </span>
                   <div className='flex-1 flex flex-col'>
                     <Field
-                      placeholder='title'
+                      placeholder='Title'
                       name='title'
                       className='flex-1 min-w-[40%] p-2.5'
                     />
@@ -116,7 +116,7 @@ const Contact = () => {
                   </span>
                   <div className='flex-1 flex flex-col'>
                     <Field
-                      placeholder='content'
+                      placeholder='Content'
                       name='content'
                       as='textarea'
                       className='h-[100px] p-2.5 flex-1 min-w-[40%]'
@@ -134,7 +134,7 @@ const Contact = () => {
                   </span>
                   <div className='flex-1 flex flex-col'>
                     <Field
-                      placeholder='fullname'
+                      placeholder='Full name'
                       name='fullname'
                       className='flex-1 min-w-[40%] p-2.5'
                     />
@@ -151,7 +151,7 @@ const Contact = () => {
                   </span>{' '}
                   <div className='flex-1 flex flex-col'>
                     <Field
-                      placeholder='email'
+                      placeholder='Email'
                       type='email'
                       name='email'
                       className='flex-1 min-w-[40%] p-2.5'
@@ -169,7 +169,7 @@ const Contact = () => {
                   </span>
                   <div className='flex-1 flex flex-col'>
                     <Field
-                      placeholder='phone'
+                      placeholder='Phone'
                       type='phone'
                       name='phone'
                       className='flex-1 min-w-[40%] p-2.5'

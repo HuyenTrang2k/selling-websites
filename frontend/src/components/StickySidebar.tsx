@@ -1,12 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function StickySidebar() {
   return (
     <div className='banner-wrapper text-center md:none'>
-            <a
+            <Link to='/products/laptop'
               data-cate='0'
               data-place='1865'
-              href='https://www.thegioididong.com/mua-online-gia-re'
               className='fixed top-[12rem] w-[6rem]'
               style={{ right: '90vw' }}
             >
@@ -16,11 +16,10 @@ function StickySidebar() {
                 src='https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/05/banner/Trai-80x271.png'
                 alt='Liễn Trái'
               />
-            </a>
-            <a
+            </Link>
+            <Link to='/products/smartphone'
               data-cate='0'
               data-place='1866'
-              href='https://www.thegioididong.com/mua-online-gia-re'
               className='fixed top-[12rem] w-[6rem]'
               style={{ left: '90vw' }}
             >
@@ -30,7 +29,7 @@ function StickySidebar() {
                 src='https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/05/banner/Phai-80x271.png'
                 alt='Liễn Phải'
               />
-            </a>
+            </Link>
           </div>
   );
 }

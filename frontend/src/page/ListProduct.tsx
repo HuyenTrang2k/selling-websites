@@ -35,7 +35,6 @@ const ProductList = () => {
   const handleSearch = (e) => {
     setSearchInput(e.target.value);
   };
-
   return (
     <div className='flex flex-col flex-1 w-full text-center'>
       <h1 className='m-4 text-3xl font-bold'>{handlerTitle(cat)}</h1>

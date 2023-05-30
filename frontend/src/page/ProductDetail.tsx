@@ -43,18 +43,18 @@ const ProductDetail: React.FC<ProductProps> = () => {
   };
 
   return (
-    <div className="bg-white w-screen h-[80vh] mt-10 flex justify-center">
-    <div className="max-w-7xl sm:px-6 lg:px-8">
+    <div className="bg-white h-[80vh] mt-10 flex justify-center">
+    <div className="sm:px-6 lg:px-8 flex-1 flex-col">
       <h1 className="text-3xl font-bold mb-8 text-center">Product Detail</h1>
-      <div className="flex flex-wrap flex-row">
-        <div className="w-full md:w-1/2 flex justify-center">
+      <div className="flex flex-wrap flex-row gap-4">
+        <div className="w-full md:w-1/2 flex-1 justify-center">
           <img
             className="h-80 object-scale-down "
             src={product.image}
             alt="Product"
           />
         </div>
-        <div className="w-full md:w-1/2 flex flex-col gap-3">
+        <div className="w-full md:w-auto flex-1 flex-col gap-3">
           <h1 className="text-xl font-semibold">{product.name}</h1>
           <p className="my-4">{product.description}</p>
           <div className="flex items-center mb-4">

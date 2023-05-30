@@ -24,7 +24,7 @@ const Register = () => {
   };
 
   return (
-    <div className='flex flex-1 flex-col h-screen bg-login2 bg-cover text-white w-screen'>
+    <div className='flex flex-1 flex-col min-h-screen bg-login2 bg-cover text-white w-screen'>
       <div className='flex rounded-2xl shadow-lg p-5 items-center justify-center h-full flex-row gap-5 '>
         <div className='w-[90%] h-[90%] bg-login flex bg-cover flex-col sm:flex-row rounded-2xl '>
           <div className='flex flex-1 lg:flex-[0.5] text-3xl h-30 text-center justify-center items-center'>
