@@ -20,7 +20,7 @@ const MenuProfile = () => {
         <Menu.Button className='flex rounded-full border-0 text-sm'>
           <span className='sr-only'>Open user menu</span>
           <img
-            className='h-12 w-12 rounded-full'
+            className='h-10 w-10 rounded-full'
             src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg'
             alt=''
           />
@@ -35,7 +35,7 @@ const MenuProfile = () => {
         leaveFrom='transform opacity-100 scale-100'
         leaveTo='transform opacity-0 scale-95'
       >
-        <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+        <Menu.Items className='absolute right-0 z-10 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
           {user ? (
             <>
               <Menu.Item>
@@ -51,19 +51,6 @@ const MenuProfile = () => {
                   </NavLink>
                 )}
               </Menu.Item>
-              {/* <Menu.Item>
-                {({ active }) => (
-                  <NavLink
-                    to='/setting'
-                    className={classNames(
-                      active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700'
-                    )}
-                  >
-                    Settings
-                  </NavLink>
-                )}
-              </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
                   <div

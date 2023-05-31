@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 let refreshTokens = [];
 dotenv.config();
 
-var data
 const authController = {
     registerUser: async (req, res) => {
         try {
@@ -37,7 +36,6 @@ const authController = {
             await cart.save();
             return res.status(200).json(user);
         } catch (err) {
-            console.log(data)
             return res.status(500).json(err);
         }
     },
@@ -67,7 +65,7 @@ const authController = {
     //LOGIN
     loginUser: async (req, res) => {
         try {
-            const user = await User.findOne({ username: req.body.username });
+            const user = await User.findOne({ email: req.body.email });
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -94,7 +92,7 @@ const authController = {
     },
     // req refreshToken
     requestRefreshToken: async (req, res) => {
-        const refreshToken = req.cookies.refreshToken;
+        const {refreshToken} = req.cookies;
         if (!refreshToken) {
             return res.status(401).json({ message: 'You are not authenticated' });
         }
@@ -120,7 +118,7 @@ const authController = {
     },
     //logout
     logoutUser: async (req, res) => {
-        const refreshToken = req.cookies.refreshToken;
+        const {refreshToken} = req.cookies;
         refreshTokens = refreshTokens.filter(token => token !== refreshToken);
         res.clearCookie('refreshToken');
         return res.status(200).json({ message: 'Logged out' });

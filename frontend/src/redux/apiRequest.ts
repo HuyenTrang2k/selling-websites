@@ -1,31 +1,49 @@
 import { Dispatch } from "redux";
-import { loginFailed, loginStart, loginSuccess, logoutStart, logoutSuccess, logoutFailed } from "./authSlice";
+import { loginFailed, loginStart, loginSuccess, logoutStart, logoutSuccess, logoutFailed, updateUserAction } from "./authSlice";
 import { addProduct, removeProduct, clearProduct } from "./cartRedux";
 import axios from "axios";
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
 export const loginUser = async (dispatch: Dispatch<any>, user: any): Promise<boolean> => {
   dispatch(loginStart());
   try {
-    // const res = await publicRequest.post("/auth/login", user);
-
-    dispatch(loginSuccess(user));
-    console.log(user);
+    const res = await axios.post("http://localhost:8000/v1/auth/login", user);
+    dispatch(loginSuccess(res.data));
     return true;
   } catch (err) {
     dispatch(loginFailed());
-    return false;
+    return err.response.data.message;
+  }
+};
+export const updateProfile = async (dispatch: Dispatch<any>, user: any, currentUser: any): Promise<boolean> => {
+  dispatch(loginStart());
+  const { _id } = currentUser;
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    };
+    const res = await axios.put(`http://localhost:8000/v1/user/${_id}`, user, config);
+    currentUser = { ...currentUser, username: user.username, phone: user.phone, address: user.address, updateAt: res.data.updateAt }
+    dispatch(updateUserAction(currentUser));
+    return true;
+  } catch (err) {
+    dispatch(loginFailed());
+    return err.response.data.message;
   }
 };
 
 export const registerUser = async (
-  user: any,
   dispatch: Dispatch<any>,
-  navigate: any
+  user: { username: string, email: string, password: string }
 ): Promise<any> => {
   dispatch(loginStart());
   try {
+    console.log(user)
     const res = await axios.post("http://localhost:8000/v1/auth/register", user);
     return res.data;
-    // navigate("/login");
   } catch (err) {
     dispatch(loginFailed());
     return err.response.data;
@@ -69,7 +87,7 @@ export const removeProductFromCart = async (
 
 export const clearCart = async (dispatch: Dispatch<any>): Promise<void> => {
   //clear cart in redux
-  dispatch(clearProduct(null));
+  dispatch(clearProduct([]));
 };
 
 export const removeProductOfCart = async (

@@ -4,24 +4,35 @@ import { loginUser } from '../redux/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import Spinner from '../components/Spinner';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.login.currentUser);
 
   const handleSubmit = async (event) => {
+    setIsLoading(true);
+
     event.preventDefault();
     const newUser = {
-      username: username,
+      email: username,
       password: password,
     };
     const res = await loginUser(dispatch, newUser);
-    if (res) {
-      navigate('/');
-    }
+    setTimeout(() => {
+      setIsLoading(false);
+      if (res === true) {
+        navigate('/');
+      }
+      else {
+        setErr(res as unknown as string);
+      }
+    }, 1000);
   };
 
   useEffect(() => {
@@ -30,19 +41,22 @@ const Login = () => {
     }
   }, []);
 
-  return (
-    <div className='flex flex-1 flex-col h-screen bg-login2 bg-cover text-white'>
+  return (<>
+    {isLoading ? (
+      <Spinner />
+    ) : null}
+    <div className='flex flex-1 flex-col h-screen bg-login2 bg-cover text-white justify-center'>
       <div className='flex rounded-2xl shadow-lg p-5 items-center justify-center h-full flex-row gap-5'>
         <div className='w-[90%] h-[90%] bg-login flex bg-cover flex-col sm:flex-row rounded-2xl'>
           <div className='flex flex-1 lg:flex-[0.5] text-3xl h-30 text-center justify-center items-center'>
             <p className='mt-4'>Welcome to Trang shop</p>
           </div>
           <div className='flex-1 lg:w-1/2 sm:w-2/3 px-8 md:px-16 w-full max-w-2xl rounded-2xl py-7 items-center align-items-center'>
-            <h2 className='mt-8 font-bold text-2xl text-center'>Login</h2>
+            <h2 className='my-4 font-bold text-2xl text-center'>Login</h2>
             <form
               onSubmit={handleSubmit}
               className='flex flex-col gap-4 text-black'
-            >
+            > {err ? <span className="text-red-500 font-bold text-center">{err}</span> : null}
               <input
                 className='p-2 mt-8 sm:mt-1 rounded-xl border'
                 type='email'
@@ -95,7 +109,9 @@ const Login = () => {
         </div>
       </div>
     </div>
+  </>
   );
+
 };
 
 export default Login;

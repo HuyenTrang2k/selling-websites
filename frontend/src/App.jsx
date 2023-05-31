@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import AboutUs from './page/AboutUs';
 import Login from './page/Login';
 import Register from './page/Register';
@@ -9,10 +9,22 @@ import Contact from './page/Contact';
 import './App.css';
 import { useSelector } from 'react-redux';
 import ContainerLayout from './components/ContainerLayout';
+import { useEffect } from 'react';
+import Profile from './page/Profile';
+import Cart from './page/Cart';
+
+const NotFound = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/');
+  }, []);
+
+  return null;
+};
 
 function App() {
   const user = useSelector((state) => state.auth.login.currentUser);
-
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
@@ -24,7 +36,10 @@ function App() {
         <Route path='product/:id' element={<ProductDetail />} />
         <Route path='about-us' element={<AboutUs />} />
         <Route path='contact' element={<Contact />} />
+        <Route path='profile' element={<Profile />} />
+        <Route path='cart' element={<Cart />} />
       </Route>
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 }

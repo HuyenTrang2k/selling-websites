@@ -18,7 +18,7 @@ const Navbar = () => {
       link: '/products',
       current: currentPath === '/products',
     },
-    { name: 'Team', link: '/login', current: currentPath === '/login' },
+    { name: 'Cart', link: '/cart', current: currentPath === '/cart' },
     {
       name: 'About us',
       link: '/about-us',

@@ -9,31 +9,39 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState('');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       const res = registerUser(dispatch, { username, email, password });
-      if (await res) {
-        navigate('/');
-      }
-    } else {
-      alert('Passwords do not match');
+      setTimeout(async () => {
+        setIsLoading(false);
+        if (await res) {
+          navigate('/login');
+        }
+        else {
+          setErr(res as unknown as string);
+        }
+      }, 1000);
     }
   };
 
   return (
-    <div className='flex flex-1 flex-col min-h-screen bg-login2 bg-cover text-white w-screen'>
+    <div className='flex flex-1 flex-col min-h-screen bg-login2 bg-cover text-white w-screen justify-center '>
       <div className='flex rounded-2xl shadow-lg p-5 items-center justify-center h-full flex-row gap-5 '>
         <div className='w-[90%] h-[90%] bg-login flex bg-cover flex-col sm:flex-row rounded-2xl '>
           <div className='flex flex-1 lg:flex-[0.5] text-3xl h-30 text-center justify-center items-center'>
             <p className='mt-4'> Wellcom to Trang shop</p>
           </div>
           <div className='flex-1 lg:w-1/2 sm:w-2/3 px-8 md:px-16 w-full max-w-2xl rounded-2xl py-7 items-center align-items-center '>
-            <h2 className='mt-8 font-bold text-2xl text-center'>Register</h2>
+            <h2 className='my-4 font-bold text-2xl text-center'>Register</h2>
 
             <form action='' className='flex flex-col gap-4 text-black'>
+              {err ? <span className="text-red-500 font-bold text-center">{err}</span> : null}
               <input
                 className='p-2 mt-8 sm:mt-1 rounded-xl border'
                 type='text'
@@ -87,7 +95,8 @@ const Register = () => {
 
             <div className='mt-3 text-xs flex justify-between items-center text-[#ffffff]'>
               <p>Already have an account?</p>
-              <button className='py-2 px-5 bg-white border text-gray-700 rounded-xl hover:scale-110 duration-300'>
+              <button className='py-2 px-5 bg-white border text-gray-700 rounded-xl hover:scale-110 duration-300'
+                onClick={() => navigate('/login')}>
                 Login
               </button>
             </div>

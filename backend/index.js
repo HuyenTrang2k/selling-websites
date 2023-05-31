@@ -13,7 +13,7 @@ const userRoute = require("./routes/User");
 const cartRoute = require("./routes/Cart");
 const orderRoute = require("./routes/Order");
 const chatRoute = require("./routes/Chat");
-
+const { sendMail } = require('./controllers/sendMailController');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': 'AY-1IurK4tN0mv18nYE-3s44jVwsRku4uJ9Bnq2F4KcSFq_XJTBZFBCNaewZyS-RxoIDSSdrViUDIboO',
@@ -51,6 +51,7 @@ app.use('/v1/user', userRoute);
 app.use('/v1/cart',cartRoute);
 app.use('/v1/order', orderRoute);
 app.use('/v1/chat', chatRoute);
+app.use('/v1/send-email', sendMail);
 
 app.post('/pay', cors(),(req, res) => {
     try{const create_payment_json = {
@@ -92,7 +93,7 @@ app.post('/pay', cors(),(req, res) => {
 app.get('/success',cors(),async (req, res) => {
 
     const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId;
+    const {paymentId} = req.query;
 
     const execute_payment_json = {
         "payer_id": payerId,

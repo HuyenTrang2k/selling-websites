@@ -1,35 +1,32 @@
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearProduct } from "../redux/cartRedux";
-import { useNavigate } from "react-router-dom";
 import React from 'react';
-
+import { RootState } from '../redux/store';
 const Order = () => {
-  const user = useSelector((state: any) => state.auth.login.currentUser);
-  const cart = useSelector((state: any) => state.cart);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const user = useSelector((state: RootState) => state.auth.login.currentUser);
+    const cart = useSelector((state: RootState) => state.cart);
+    const dispatch = useDispatch();
+    console.log(user._id)
+    const postOrder =() => {
+        axios.post(`http://localhost:8000/v1/order/${user._id}`, {
+            products: cart.products,
 
-  const postOrder = () => {
-    axios.post(`http://localhost:8000/v1/order/${user._id}`, {
-      products: cart.products,
-    })
-    .then((response) => {
-      console.log(response);
-      dispatch(clearProduct(cart.products));
-      navigate("/");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
-
-  return (
-    <div className="order">
-      <h1>ORDER SUCCESS</h1>
-      <button onClick={postOrder}>to home</button>
-    </div>
-  );
+          },)
+          .then((response) => {
+            console.log(response)
+            dispatch(clearProduct(cart.products))
+            
+            window.location.href = "http://localhost:3006/";
+        })
+    }
+    return (
+        <div className="order">
+            <h1>ORDER SUCCESS</h1>
+            <button type='button' onClick={postOrder()} >to home</button>
+        </div>
+    )
 }
 
-export default Order;
+export default Order
