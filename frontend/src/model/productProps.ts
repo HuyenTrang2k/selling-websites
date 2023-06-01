@@ -9,4 +9,5 @@ export interface ProductProps {
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
+  productId: string;
 }

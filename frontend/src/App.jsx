@@ -12,6 +12,7 @@ import ContainerLayout from './components/ContainerLayout';
 import { useEffect } from 'react';
 import Profile from './page/Profile';
 import Cart from './page/Cart';
+import Order from './page/Order';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function App() {
         <Route path='contact' element={<Contact />} />
         <Route path='profile' element={<Profile />} />
         <Route path='cart' element={<Cart />} />
+        <Route path='order' element={<Order />} />
       </Route>
       <Route path='*' element={<NotFound />} />
     </Routes>

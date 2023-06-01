@@ -3,6 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import Toast from '../components/Toast';
+import Spinner from '../components/Spinner';
 
 const ContactSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
@@ -11,18 +16,41 @@ const ContactSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   phone: Yup.string().required('Required'),
 });
-
 const Contact = () => {
+  const user = useSelector((state: RootState) => state.auth.login.currentUser)
   const [isSending, setIsending] = useState(false);
+  const [showToast, setShowToasts] = useState(false);
+  const [msg, setMsg] = useState('');
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (values, { resetForm }) => {
     setIsending(true);
-    alert('Thank you for your contact information!');
-    setIsending(false);
+    axios.post(`http://localhost:8000/v1/mail/contact`, {
+      data: values
+    })
+      .then((res) => {
+        setShowToasts(true)
+        if (res.status === 200) {
+          setMsg(res.data.message);
+        } else {
+          setMsg(res.data.message);
+        }
+      })
+      .catch((error) => {
+        // Handle error if necessary
+      })
+      .finally(() => {
+        setIsending(false);
+        resetForm();
+      });
+  };
+  const handleClose = () => {
+    setShowToasts(false);
+    setMsg('');
   };
 
-  return (
+  return (<>
+    {showToast ? <Toast message={msg} onClose={handleClose}></Toast> : null}
+    {isSending ? <Spinner /> : null}
     <div className='px-10'>
       <h1 className='m-5 text-3xl font-bold text-center'>Contact us</h1>
       <div className='flex gap-8 min-h-[650px] flex-row text-left border border-gray-300 rounded-lg mb-5'>
@@ -43,13 +71,7 @@ const Contact = () => {
             để xem bản đồ và địa chỉ của các siêu thị của chúng tôi trên toàn
             quốc.
           </div>
-          <div className='img flex justify-center my-4 lg:my-8 gap-10'>
-            <img
-              src='/src/assets/contact.png'
-              className='w-1/2 bg-[#a9b8fa] max-w-xs max-h-xs lg:max-w-lg lg:max-h-md object-cover'
-              alt='Contact'
-            />
-
+          <div className='flex justify-center my-4 lg:my-8 gap-10 flex-wrap'>
             <div className='py-2.5 w-2/3'>
               <h3 className='font-semibold'>Trang SHOP</h3>
               <p>Address: Cộng Hòa, Phường 13, Tân Bình, TP.HCM</p>
@@ -64,6 +86,11 @@ const Contact = () => {
                 </span>
               </p>
             </div>
+            <img
+              src='/src/assets/contact.png'
+              className='w-1/2 bg-[#a9b8fa] max-w-xs max-h-xs lg:max-w-lg lg:max-h-md object-cover'
+              alt='Contact'
+            />
           </div>
         </div>
         <div className='w-full p-5 flex-1'>
@@ -184,11 +211,10 @@ const Contact = () => {
                 <button
                   type='submit'
                   disabled={isSubmitting}
-                  className={`w-[40%] px-4 py-2 font-semibold text-sm  text-white rounded-full shadow-sm ${
-                    isSubmitting
-                      ? 'cursor-not-allowed bg-gray-500'
-                      : 'bg-cyan-500'
-                  } mx-auto`}
+                  className={`w-[40%] px-4 py-2 font-semibold text-sm  text-white rounded-full shadow-sm ${isSubmitting
+                    ? 'cursor-not-allowed bg-gray-500'
+                    : 'bg-cyan-500'
+                    } mx-auto`}
                 >
                   Send
                 </button>
@@ -197,7 +223,7 @@ const Contact = () => {
           </Formik>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 export default Contact;

@@ -12,19 +12,32 @@ const transporter = nodemailer.createTransport({
 
 const sendMailController = {
   sendMail: async (req, res) => {
-    console.log(req.body);
     try {
-      const { email, title, content, fullname, phone } = req.body;
+      const { email, title, content, fullname, phone } = req.body.data;
       const message = `From: ${fullname}\nPhone: ${phone}\nMessage: ${content}`;
       const info = await transporter.sendMail({
-        from: "Nhat Shop",
+        from:"Trang Shop",
         to: email,
         subject: title,
         text: message,
       });
+      res.send({ message: "Email sent successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "Failed to send email" });
+    }
+  },
 
-      console.log("Message sent: %s", info.messageId);
-
+  sendContact: async (req, res) => {
+    try {
+      const { email, title, content, fullname, phone } = req.body.data;
+      const message = `From: ${fullname}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${content}`;
+      const info = await transporter.sendMail({
+        from:"Trang Shop",
+        to: 'Ninakhoa1234@gmail.com',
+        subject: title,
+        text: message,
+      });
       res.send({ message: "Email sent successfully" });
     } catch (error) {
       console.error(error);

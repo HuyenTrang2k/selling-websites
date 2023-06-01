@@ -31,7 +31,7 @@ const AboutUs = () => {
   const phoneIcon = findIconDefinition({ prefix: 'fas', iconName: 'phone' });
   return (
     <>
-      <h1 className='m-4 font-bold font-16px'>About us</h1>
+      <h1 className='m-4 text-3xl font-bold'>About us</h1>
       <div className='p-4 border rounded'>
         <div className='flex'>
           <div className='w-full max-h-400px min-w-300px'>

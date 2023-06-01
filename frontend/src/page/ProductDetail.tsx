@@ -39,7 +39,6 @@ const ProductDetail: React.FC<ProductProps> = () => {
   const handleClick = () => {
     const productId = product.id;
     addProductToCart({ quantity, productId, userId, dispatch });
-    dispatch(addProduct({ ...product, quantity }));
   };
 
   return (

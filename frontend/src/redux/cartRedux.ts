@@ -13,40 +13,43 @@ const initialState: CartState = {
   total: 0,
 };
 
+const calculateTotal = (products) => {
+  let quantity = 0;
+  let total = 0;
+
+  products.forEach((cartProduct) => {
+    quantity += cartProduct.quantity;
+    total += cartProduct.price * cartProduct.quantity;
+  });
+
+  return { quantity, total };
+};
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      const product = state.products.find(
-        (product) => product.id === action.payload.id
-      );
-      if (product) {
-        product.quantity += 1;
-        state.total += action.payload.price;
-      } else {
-        state.quantity += 1;
-        state.products.push(action.payload);
-        state.total += action.payload.price * action.payload.quantity;
-      }
+      const cartProducts = action.payload.products;
+      state.products = cartProducts;
+
+      const { quantity, total } = calculateTotal(cartProducts);
+      state.quantity = quantity;
+      state.total = total;
+
     },
+
     removeProduct: (state, action) => {
       const productId = action.payload;
-      const product = state.products.find((product) => product.id === productId);
-      if (product) {
-        if (product.quantity > 1) {
-          product.quantity -= 1;
-          state.total -= product.price;
-        } else {
-          state.quantity -= 1;
-          state.products = state.products.filter(
-            (product) => product.id !== productId
-          );
-          state.total -= product.price;
-        }
-      }
+      state.products = state.products.filter(product => product.id !== productId);
+
+      const { quantity, total } = calculateTotal(state.products);
+      state.quantity = quantity;
+      state.total = total;
+
     },
-    clearProduct: (state, action: PayloadAction<ProductProps[]>) => {
+
+    clearProduct: (state, action) => {
       state.quantity = 0;
       state.products = [];
       state.total = 0;

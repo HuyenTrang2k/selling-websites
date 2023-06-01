@@ -4,12 +4,12 @@ const Toast = ({ message, onClose }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    // const timeout = setTimeout(() => {
-    //   setShow(false);
-    //   onClose();
-    // }, 5000);
+    const timeout = setTimeout(() => {
+      setShow(false);
+      onClose();
+    }, 5000);
 
-    // return () => clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   }, [onClose]);
 
   const handleClose = () => {

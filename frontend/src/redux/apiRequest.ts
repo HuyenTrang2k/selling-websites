@@ -41,7 +41,6 @@ export const registerUser = async (
 ): Promise<any> => {
   dispatch(loginStart());
   try {
-    console.log(user)
     const res = await axios.post("http://localhost:8000/v1/auth/register", user);
     return res.data;
   } catch (err) {
@@ -66,29 +65,43 @@ export const addProductToCart = async (props: {
   productId: string;
   quantity: number;
 }): Promise<void> => {
-  // console.log(props.userId, props.productId);
-  // const res = await axios.post(`http://localhost:8000/v1/cart/${props.userId}/${props.productId}`, {quantity:props.quantity});
-  // props.dispatch(addProduct(res.data));
-  //add product to cart
   const res = await axios.post(`http://localhost:8000/v1/cart/${props.userId}/${props.productId}`, {
     quantity: props.quantity,
   });
   props.dispatch(addProduct(res.data));
 };
 
-export const removeProductFromCart = async (
-  product: any,
-  user: any,
-  dispatch: Dispatch<any>
-): Promise<void> => {
-  const res = await axios.delete(`http://localhost:8000/v1/cart/${user.id}/${product.id}`);
-  dispatch(removeProduct(res.data));
+export const changeQuantityProductCart = async (props: {
+  dispatch: Dispatch<any>;
+  userId: string;
+  productId: string;
+  quantity: number;
+}): Promise<void> => {
+  console.log(props.quantity)
+  const res = await axios.put(`http://localhost:8000/v1/cart/${props.userId}/${props.productId}`, {
+    quantity: props.quantity,
+  });
+  props.dispatch(addProduct(res.data));
 };
 
-export const clearCart = async (dispatch: Dispatch<any>): Promise<void> => {
-  //clear cart in redux
-  dispatch(clearProduct([]));
+export const removeProductFromCart = async (
+  productId: string,
+  userId: string,
+  dispatch: Dispatch<any>
+): Promise<void> => {
+  const res = await axios.delete(`http://localhost:8000/v1/cart/${userId}/${productId}`);
+  dispatch(removeProduct(productId));
 };
+
+export const clearCart = async (dispatch: Dispatch<any>, userId: any): Promise<void> => {
+  try {
+    const res = await axios.post(`http://localhost:8000/v1/cart/clear`, { userId: userId });
+    dispatch(clearProduct([]));
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+  }
+};
+
 
 export const removeProductOfCart = async (
   product: any,
