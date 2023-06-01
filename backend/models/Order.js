@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const OrderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User2',
         required: true
     },
     products: [{
@@ -22,4 +22,4 @@ const OrderSchema = new mongoose.Schema({
 },
 {timestamps: true});
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('Order2', OrderSchema);

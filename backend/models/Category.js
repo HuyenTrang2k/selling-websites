@@ -22,9 +22,9 @@ const categorySchema = new mongoose.Schema({
     },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+        ref: 'Product2'
     }]
     
 })
 
-module.exports = mongoose.model('Category', categorySchema);
+module.exports = mongoose.model('Category2', categorySchema);

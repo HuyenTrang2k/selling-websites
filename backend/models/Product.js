@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 3,
-        maxLength: 20,
+        maxLength: 50,
         unique: true
     },
     description: {
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'Category2'
     },
     quantity: {
         type: Number,
@@ -39,4 +39,4 @@ const productSchema = new mongoose.Schema({
 {timestamps: true});
 
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product2', productSchema);
