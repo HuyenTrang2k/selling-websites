@@ -1,9 +1,9 @@
 import "./featuredInfo.css";
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useEffect, useState } from "react";
 import { userRequest } from "../../requestMethods";
-
+import {incomeData} from "../../dummyData";
 export default function FeaturedInfo() {
   const [income, setIncome] = useState([]);
   const [perc, setPerc] = useState(0);
@@ -11,9 +11,16 @@ export default function FeaturedInfo() {
   useEffect(() => {
     const getIncome = async () => {
       try {
-        const res = await userRequest.get("orders/income");
-        setIncome(res.data);
-        setPerc((res.data[1].total * 100) / res.data[0].total - 100);
+        // Thay thế phần này bằng request API của bạn
+        // const res = await userRequest.get("orders/income");
+        // setIncome(res.data);
+        // setPerc((res.data[1].total * 100) / res.data[0].total - 100);
+
+        // Dữ liệu giả định
+        const dummyData = incomeData;
+
+        setIncome(dummyData);
+        setPerc((dummyData[1].total * 100) / dummyData[0].total - 100);
       } catch {}
     };
     getIncome();
@@ -22,7 +29,7 @@ export default function FeaturedInfo() {
   return (
     <div className="featured">
       <div className="featuredItem">
-        <span className="featuredTitle">Revanue</span>
+        <span className="featuredTitle">Revenue</span>
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">${income[1]?.total}</span>
           <span className="featuredMoneyRate">

@@ -13,6 +13,7 @@ import {
   addProductFailure,
   addProductStart,
   addProductSuccess,
+  addListProductSuccess
 } from "./productRedux";
 import {
   getCategoryStart,
@@ -41,6 +42,7 @@ export const getProducts = async (dispatch) => {
   dispatch(getProductStart());
   try {
     const res = await publicRequest.get("/product");
+    console.log(res.data)
     dispatch(getProductSuccess(res.data));
   } catch (err) {
     dispatch(getProductFailure());
@@ -80,6 +82,19 @@ export const addProduct = async (product, dispatch) => {
     return false;
   }
 };
+export const addListProduct = async (product, dispatch) => {
+  dispatch(addProductStart());
+  try {
+    console.log(product);
+    const res = await userRequest.post(`/product/list`, product);
+    dispatch(addListProductSuccess(res.data));
+    return res;
+  } catch (err) {
+    dispatch(addProductFailure());
+    return false;
+  }
+};
+
 export const getCategories = async (dispatch) => {
   dispatch(getCategoryStart());
   try {

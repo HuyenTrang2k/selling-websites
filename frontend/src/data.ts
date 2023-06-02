@@ -4,45 +4,45 @@ export const sliderItem = [
   [
     {
       id: 1,
-      img: 'https://cdn.tgdd.vn/2023/01/banner/1200-300-1200x300-1.webp',
-      name: 'Aya Bouchiha',
-      description: 'Full Stack Web Developer',
-      title: 'BLACK FRIDAY',
-      desc: 'SALE UP TO 90% OFF',
+      img: 'https://down-ws-vn.img.susercontent.com/vn-11134210-7qukw-lhg03bcdq9xd2a.webp',
+      name: 'Pitsu Coma',
+      description: 'Math Student',
+      title: 'NEW!!!',
+      desc: 'SHOP NOW. Sandisk',
       bg: 'f5fafd',
-      cat: 'watch',
+      cat: 'storage-device',
     },
     {
       id: 2,
-      img: 'https://cdn.tgdd.vn/2022/12/banner/800-200-800x200-97.webp',
-      name: 'Aya Bouchiha',
-      description: 'Full Stack Web Developer',
+      img: 'https://vn-test-11.slatic.net/shop/6899e5bd9600f5a61b01486e61167293.png',
+      name: 'tp-link router',
+      description: 'Router',
       title: 'NEW!!!',
-      desc: 'NOW IPHONE 14 IS AVAILABLE',
+      desc: 'tp-link router',
       bg: 'f5fafd',
-      cat: 'laptop',
+      cat: 'router',
     },
   ],
   [
     {
       id: 3,
-      img: 'https://cdn.tgdd.vn/2022/12/banner/720-220-720x220-264.webp',
-      name: 'John Doe',
-      description: 'Author',
-      title: 'NEW!!!',
-      desc: 'SHOP NOW. APPLE WATCH SERIES 6',
+      img: "https://vn-test-11.slatic.net/shop/9ebe0c5be571b17ee01ba617bf526d07.png",
+      name: 'camera',
+      description: 'Camera',
+      title: 'BLACK FRIDAY',
+      desc: 'SALE UP TO 50% OFF',
       bg: 'f5fafd',
-      cat: 'smartphone',
+      cat: 'camera',
     },
     {
       id: 4,
-      img: 'https://cdn.tgdd.vn/2022/12/banner/reno8-tet-720-220-720x220.webp',
-      name: 'Pitsu Coma',
-      description: 'Math Student',
+      img: 'https://vn-test-11.slatic.net/shop/bf258c6991bfeae62e6465b88600b9eb.png',
+      name: 'Camera',
+      description: 'Author',
       title: 'NEW!!!',
-      desc: 'SHOP NOW. APPLE WATCH SERIES 6',
+      desc: 'SHOP NOW. Camera',
       bg: 'f5fafd',
-      cat: 'smartphone',
+      cat: 'camera',
     },
   ],
 ];
@@ -50,24 +50,24 @@ export const sliderItem = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.fpt.shop/unsafe/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/12/27/638077302825230698_desk-html-banner.png",
-    title: "SMART PHONE",
-    cat: 'smartphone',
+    img: "https://t3.ftcdn.net/jpg/02/00/20/90/240_F_200209004_ZEy19OimfGMfq9YmVjWRQcZ3vh98XyVx.jpg",
+    title: "Camera",
+    cat: 'camera',
   },
   {
     id: 2,
-    img: "https://cdn.tgdd.vn/Files/2021/11/18/1398727/macm1max_1280x720-800-resize.jpg",
-    title: "LAPTOP",
-    cat: 'laptop',
+    img: "https://ottawa.ctvnews.ca/polopoly_fs/1.5201227!/httpImage/image.png_gen/derivatives/landscape_960/image.png",
+    title: "Router",
+    cat: 'router',
   },
   {
     id: 3,
-    img: "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/9/7/1090265/Screen-Shot-2022-09--02.jpg",
-    title: "SMART WATCH",
-    cat: 'watch',
+    img: "https://olbac.com/olbac-website/public/storage/8002/conversions/638e17ee8e65a_Lexar_SL660_Blaze_5-2-thumb.jpg",
+    title: "Storage device",
+    cat: 'storage-device',
   },
 ];
-export const listShowroom : ShowroomProps[] = [
+export const listShowroom: ShowroomProps[] = [
   {
     id: 1,
     name: 'Cửa hàng Di Động NHAT SHOP',
@@ -99,40 +99,40 @@ export const listShowroom : ShowroomProps[] = [
     }
   }];
 
-  export const products = [
-    {
-      id: 1,
-      name: "iPhone 13 Pro",
-      price: 999,
-      createdAt: new Date("2021-09-14"),
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 2,
-      name: "Samsung Galaxy S21",
-      price: 799,
-      createdAt: new Date("2021-01-29"),
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 3,
-      name: "Google Pixel 6",
-      price: 899,
-      createdAt: new Date("2021-10-19"),
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 4,
-      name: "OnePlus 9 Pro",
-      price: 899,
-      createdAt: new Date("2021-03-23"),
-      image: "https://via.placeholder.com/400x300"
-    },
-    {
-      id: 5,
-      name: "Xiaomi Mi 11",
-      price: 749,
-      createdAt: new Date("2021-02-08"),
-      image: "https://via.placeholder.com/400x300"
-    }
-  ];
+export const products = [
+  {
+    id: 1,
+    name: "iPhone 13 Pro",
+    price: 999,
+    createdAt: new Date("2021-09-14"),
+    image: "https://via.placeholder.com/400x300"
+  },
+  {
+    id: 2,
+    name: "Samsung Galaxy S21",
+    price: 799,
+    createdAt: new Date("2021-01-29"),
+    image: "https://via.placeholder.com/400x300"
+  },
+  {
+    id: 3,
+    name: "Google Pixel 6",
+    price: 899,
+    createdAt: new Date("2021-10-19"),
+    image: "https://via.placeholder.com/400x300"
+  },
+  {
+    id: 4,
+    name: "OnePlus 9 Pro",
+    price: 899,
+    createdAt: new Date("2021-03-23"),
+    image: "https://via.placeholder.com/400x300"
+  },
+  {
+    id: 5,
+    name: "Xiaomi Mi 11",
+    price: 749,
+    createdAt: new Date("2021-02-08"),
+    image: "https://via.placeholder.com/400x300"
+  }
+];

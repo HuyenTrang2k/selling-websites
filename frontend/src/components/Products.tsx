@@ -23,6 +23,17 @@ const Container: React.FC<ContainerProps> = ({ children }) => (
 const Products: React.FC<ProductsProps> = ({ cat, sort, search }) => {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [loading, setLoading] = useState(false);
+  
+  const handlerTitle = (value) => {
+    switch (value) {
+      case 'camera':
+        return 'Camera';
+      case 'storage-device':
+        return 'Storage device';
+      case 'router':
+        return 'Router';
+      }
+    }
 
   useEffect(() => {
     const getProducts = async () => {
@@ -30,7 +41,7 @@ const Products: React.FC<ProductsProps> = ({ cat, sort, search }) => {
         setLoading(true);
         let url = '';
         if (cat) {
-          url = `http://localhost:8000/v1/product?category=${cat}`;
+          url = `http://localhost:8000/v1/product?category=${handlerTitle(cat)}`;
         } else if (search) {
           url = `http://localhost:8000/v1/product${search}`;
         } else {

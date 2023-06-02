@@ -18,7 +18,7 @@ const ProductCategory = () => {
       const res = await axios.get('http://localhost:8000/v1/product');
       setProducts(res.data);
       setLoading(false);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const getCategory = async () => {
@@ -27,7 +27,7 @@ const ProductCategory = () => {
       const resCat = await axios.get('http://localhost:8000/v1/category');
       setCategory(resCat.data);
       setLoading(false);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -45,15 +45,26 @@ const ProductCategory = () => {
     return arrayOfArrays;
   };
 
+  const getRandomColor = () => {
+    const minRed = 46;
+    const minGreen = 100;
+    const minBlue = 101;
+
+    const red = Math.floor(Math.random() * (256 - minRed) + minRed);
+    const green = Math.floor(Math.random() * (256 - minGreen) + minGreen);
+    const blue = Math.floor(Math.random() * (256 - minBlue) + minBlue);
+
+    return `rgb(${red}, ${green}, ${blue})`;
+  };
+
   return (
     <div className='flex flex-col justify-center text-center'>
       {category.map((cat) => (
         <div
-          className='p-8 mb-4'
+          className='p-8 border-white border-2 border-solid'
           style={{
-            backgroundImage:
-              'url(//cdn.tgdd.vn/mwgcart/mwg-site/ContentMwg/images/newyear2023/Background/xu-huong-mua-sam.png)',
-            backgroundSize: '100% 100%',
+            background: `linear-gradient(to bottom right, ${getRandomColor()}, ${getRandomColor()})`,
+           backgroundSize: '100% 100%',
           }}
           key={cat.id}
         >

@@ -79,7 +79,29 @@ const ProductController = {
         } catch (err) {
             return res.status(500).json(err);
         }
-    }
+    },
+
+    createListProducts: async (req, res) => {
+        try {
+          const products = req.body; // Mảng sản phẩm được truyền vào
+          const savedProducts = [];
+      
+          for (let i = 0; i < products.length; i++) {
+            const newProduct = new Product(products[i]);
+            const product = await newProduct.save();
+            savedProducts.push(product);
+      
+            await Category.findByIdAndUpdate(products[i].category, {
+              $push: { products: product._id }
+            });
+          }
+      
+          return res.status(200).json(savedProducts);
+        } catch (err) {
+          return res.status(500).json(err);
+        }
+      }
+      
 }
 
 module.exports = ProductController;

@@ -11,6 +11,10 @@ router.get("/:id", productController.getProduct);
 router.delete("/:id" ,productController.deleteProduct);
 //create product
 router.post("/", productController.createProduct);
+
+router.delete("/:id" ,productController.deleteProduct);
+//list product
+router.post("/list", productController.createListProducts);
 //update product
 router.put("/:id", productController.updateProduct);
 

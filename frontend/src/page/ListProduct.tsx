@@ -12,14 +12,12 @@ const ProductList = () => {
 
   const handlerTitle = (value) => {
     switch (value) {
-      case 'laptop':
-        return 'Laptop';
-      case 'watch':
-        return 'Smartwatch';
-      case 'smartphone':
-        return 'Smartphone';
-      case 'tablet':
-        return 'Tablet';
+      case 'Camera':
+        return 'Camera';
+      case 'Storage device':
+        return 'Storage device';
+      case 'Camera':
+        return 'Router';
       case undefined: {
         if (search) {
           return 'Search';
@@ -50,7 +48,7 @@ const ProductList = () => {
             <option value='desc'>Price (desc)</option>
           </select>
         </div>
-        <div className='flex items-center'>
+        <div className='flex items-center gap-3'>
           <input
             type='text'
             placeholder='Search...'

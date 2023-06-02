@@ -5,7 +5,7 @@ import Categories from '../components/Categories';
 
 const Home = () => {
   return (
-    <div className='flex flex-col justify-center bg-[#F9EA89] '>
+    <div className='flex flex-col justify-center bg-gradient-to-r from-teal-300 to-indigo-700 '>
       <Slider/>
       <Categories/>
       <ProductCategory />

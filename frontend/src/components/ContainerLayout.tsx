@@ -45,10 +45,10 @@ function ContainerLayout({ children }) {
   }, []);
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen ${containerWidth} mx-auto`}
+      className={`flex flex-col items-center justify-center min-h-screen ${containerWidth} mx-auto `}
     >
-      <Navbar />
       <Announcement />
+      <Navbar />
       <Outlet />
       {showBanner && (
         <>
