@@ -44,6 +44,16 @@ const ProductCategory = () => {
     );
     return arrayOfArrays;
   };
+  const handlerTitle = (value) => {
+    switch (value) {
+      case 'Camera':
+        return 'camera';
+      case 'Storage device':
+        return 'storage-device';
+      case 'Router':
+        return 'router';
+    }
+  }
 
   const getRandomColor = () => {
     const minRed = 46;
@@ -64,7 +74,7 @@ const ProductCategory = () => {
           className='p-8 border-white border-2 border-solid'
           style={{
             background: `linear-gradient(to bottom right, ${getRandomColor()}, ${getRandomColor()})`,
-           backgroundSize: '100% 100%',
+            backgroundSize: '100% 100%',
           }}
           key={cat.id}
         >
@@ -77,7 +87,7 @@ const ProductCategory = () => {
               ))}
           </div>
           <Link
-            to={`/products/${cat.name}`}
+            to={`/products/${handlerTitle(cat.name)}`}
             className='bg-white text-black no-underline p-2.5 w-[370px] inline-block overflow-hidden rounded-md text-center py-3 mb-4 mx-auto sm:w-[200px]'
           >
             Xem tất cả sản phẩm

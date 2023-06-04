@@ -6,10 +6,12 @@ import { clearProduct, removeProduct } from '../redux/cartRedux';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { RootState } from '../redux/store';
+import Toast from '../components/Toast';
 
 const Cart = () => {
   const user = useSelector((state: RootState) => state.auth.login.currentUser);
   const cart = useSelector((state: RootState) => state.cart);
+  const [showToast, setShowToast] = useState(false);
   const userId = user?._id;
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -22,7 +24,9 @@ const Cart = () => {
         window.location.replace(response.data);
       });
   };
-
+  const handleClose = () => {
+    setShowToast(false);
+  };
   const handleClear = async () => {
     await clearCart(dispatch, userId);
   };
@@ -32,24 +36,27 @@ const Cart = () => {
   };
 
   const handleQuantity = async (action: string, productId: string) => {
+   
     const cartProduct = cart.products.find((product) => product.id === productId);
     if (cartProduct) {
       if (action === 'increase') {
         const newQuantity = cartProduct.quantity + 1;
         console.log(newQuantity);
-        changeQuantityProductCart({ dispatch, userId, productId:cartProduct.productId, quantity: newQuantity });
+        changeQuantityProductCart({ dispatch, userId, productId: cartProduct.productId, quantity: newQuantity });
+        
       } else if (action === 'decrease') {
         if (cartProduct.quantity > 1) {
           const newQuantity = cartProduct.quantity - 1;
-          changeQuantityProductCart({ dispatch, userId, productId:cartProduct.productId, quantity: newQuantity });
+          changeQuantityProductCart({ dispatch, userId, productId: cartProduct.productId, quantity: newQuantity });
         } else {
           removeProductFromCart(productId, userId, dispatch);
         }
       }
+      setShowToast(true);
     }
   }
 
-  let totalPrice = 0;
+  let totalPrice = cart.total + 5.9;
   return (
     <div className="p-4 sm:p-2 flex-1 w-full text-center">
       <h1 className='m-4 text-3xl font-bold'>Your bag</h1>
@@ -72,7 +79,6 @@ const Cart = () => {
       <div className="flex justify-between flex-col sm:flex-row gap-4">
         <div className="Item flex-1 gap-4 flex flex-col">
           {cart.products.map((product, index) => (
-            totalPrice += product.price * product.quantity,
             <div key={index} className="flex justify-between">
               <div className="flex-2 flex">
                 <img src={product.image} alt="product" className="w-20 h-20" />
@@ -102,7 +108,7 @@ const Cart = () => {
                     </button>
                   </div>
                 </div>
-                <div className="text-30 font-light">Price: ${product.price * product.quantity}</div>
+                <div className="text-30 font-light">Price: ${(product.price * product.quantity).toFixed(2)}</div>
               </div>
               <div className="flex-1 flex items-center justify-center">
                 <Link
@@ -134,7 +140,7 @@ const Cart = () => {
             <div className="mb-30 mt-30">
               <div className="flex justify-between mt-4">
                 <span>Subtotal</span>
-                <span>${totalPrice}</span>
+                <span>${cart.total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between mt-4">
                 <span>Estimated Shipping</span>
@@ -142,7 +148,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between mt-4">
                 <span>Total</span>
-                <span>${totalPrice + 5.9}</span>
+                <span>${totalPrice.toFixed(2)}</span>
               </div>
             </div>
             <div className="flex justify-end mt-auto">
@@ -163,6 +169,7 @@ const Cart = () => {
           : null}
 
       </div>
+      {showToast && <Toast message={"Add cart successful!"} onClose={handleClose} />}
     </div >
   );
 };

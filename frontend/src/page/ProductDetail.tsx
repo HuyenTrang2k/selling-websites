@@ -6,12 +6,13 @@ import { addProductToCart } from '../redux/apiRequest';
 import { ProductProps } from '../model/productProps';
 import React from 'react';
 import { publicRequest } from '../../requestMethods';
-
+import Toast from '../components/Toast'
 const ProductDetail: React.FC<ProductProps> = () => {
   const location = useLocation();
   const id = location.pathname.split('/')[2];
   const [product, setProduct] = useState<any>({});
   const [quantity, setQuantity] = useState<number>(1);
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.auth.login.currentUser);
   const userId = user?._id;
@@ -37,16 +38,24 @@ const ProductDetail: React.FC<ProductProps> = () => {
   };
 
   const handleClick = () => {
+    setTimeout(() => {
+      handleClose();
+    }, 1000);
+
     if (user) {
       const productId = product.id;
       addProductToCart({ quantity, productId, userId, dispatch });
+      setShowToast(true)
     }
     else {
       alert("Please login before~")
       navigate('/login')
     }
   };
-
+  const handleClose = () => {
+    setShowToast(false);
+    console.log("close")
+  };
   return (
     <div className="bg-white h-[80vh] mt-10 flex justify-center">
       <div className="sm:px-6 lg:px-8 flex-1 flex-col">
@@ -91,6 +100,7 @@ const ProductDetail: React.FC<ProductProps> = () => {
           </div>
         </div>
       </div>
+      {showToast && <Toast message={"Add cart successful!"} onClose={handleClose} />}
     </div>
 
   );

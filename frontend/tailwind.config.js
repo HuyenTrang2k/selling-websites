@@ -10,6 +10,10 @@ module.exports = {
       'xl': { 'min': '1280px' }
     },
     extend: {
+      transitionDuration: {
+        '3000': '3000ms',
+        '5000': '5000ms',
+      },
       backgroundImage: {
         'login': "url('/src/assets/1.jpg')",
         'login2': "url('/src/assets/2.jpg')",
