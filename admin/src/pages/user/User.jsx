@@ -9,13 +9,14 @@ import "./user.css";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import Switch from '@mui/material/Switch';
 
 export default function User() {
 
   const [user, setUser] = useState({});
   document.title = `view user ${user.username}`;
   const [loading, setLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   // get id from url
   const id = window.location.pathname.split("/")[2];
 
@@ -31,6 +32,8 @@ export default function User() {
     const res = await axios.get(`http://localhost:8000/v1/user/${id}`, config);
     setLoading(false);
     setUser(res.data);
+    setIsAdmin(user.admin)
+    console.log(isAdmin)
   };
 
   const handleUpdate = async (e) => {
@@ -39,11 +42,13 @@ export default function User() {
     const email = e.target[1].value;
     const phone = e.target[2].value;
     const address = e.target[3].value;
+    const admin = isAdmin;
     const user = {
       username,
       email,
       phone,
       address,
+      admin
     };
     // axios config header
     const config = {
@@ -64,6 +69,9 @@ export default function User() {
   useEffect(() => {
     getUser();
   }, []);
+  useEffect(() => {
+    setIsAdmin(user.admin)
+  }, [user]);
 
   const handleDelete = async () => {
     // axios config header
@@ -212,12 +220,16 @@ export default function User() {
                   required
                 />
               </div>
+              <div className="userUpdateItem">
+                <label>Admin</label>
+                <Switch checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
+              </div>
 
             </div>
 
             <div className="userUpdateRight">
               <button className="userUpdateButton">Update</button>
-              <button className='userDeleteUser' onClick={ handleDelete }>
+              <button className='userDeleteUser' onClick={handleDelete}>
                 Delete user {user.username}
               </button>
             </div>

@@ -10,13 +10,13 @@ const Login = () => {
   if (admin.currentUser !== null && admin.currentUser['admin'] === true) {
     window.location.replace("/");
   }
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const loginAction = await login(dispatch, { username, password });
+    const loginAction = await login(dispatch, { email, password });
     if (loginAction != null) {
       if (loginAction['admin'] === true) {
         alert(`hello ${loginAction.username}`);
@@ -36,8 +36,8 @@ const Login = () => {
       </h1>
       <input
         type="text"
-        placeholder="username"
-        onChange={(e) => setUsername(e.target.value)}
+        placeholder="email"
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input
         type="password"

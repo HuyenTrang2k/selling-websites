@@ -13,7 +13,6 @@ const UserController = {
 
                 // Truy vấn người dùng mới theo điều kiện ngày khởi tạo
                 const users = await User.find({ createdAt: { $gte: threeMonthsAgo } });
-                console.log('new')
                 return res.status(200).json(users);
             } else {
                 // Trả về tất cả người dùng nếu không có query parameter 'new=true'

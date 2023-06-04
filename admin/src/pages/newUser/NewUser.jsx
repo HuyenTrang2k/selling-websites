@@ -26,7 +26,7 @@ export default function NewUser() {
       },
     };
     try {
-      const newUser = axios.post(`http://localhost:8000/v1/user`, user, config);
+      const newUser = axios.post(`http://localhost:8000/v1/auth/register`, user);
       // move to user page
       alert("New user created successfully");
     }
