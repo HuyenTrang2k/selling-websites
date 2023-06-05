@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 import Profile from './page/Profile';
 import Cart from './page/Cart';
 import Order from './page/Order';
+import VerifyEmail from './page/ResetPassword';
+import ResetPassword from './page/ResetPassword';
+import ForgotPassword from './page/ForgotPassword';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -40,6 +43,8 @@ function App() {
         <Route path='profile' element={<Profile />} />
         <Route path='cart' element={<Cart />} />
         <Route path='order' element={<Order />} />
+        <Route path='reset-password' element={<ResetPassword />} />
+        <Route path='forgot-password' element={<ForgotPassword />} />
       </Route>
       <Route path='*' element={<NotFound />} />
     </Routes>

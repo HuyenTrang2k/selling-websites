@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Cart = require('../models/Cart');
 const dotenv = require('dotenv');
-
+const { sendCodeResetPassword } = require('./sendMailController');
 let refreshTokens = [];
 dotenv.config();
 
@@ -12,7 +12,7 @@ const authController = {
         try {
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(req.body.password, salt);
-            
+
             //create new user
             const newUser = await new User({
                 username: req.body.username,
@@ -20,7 +20,7 @@ const authController = {
                 phone: req.body.phone,
                 address: req.body.address,
                 password: hashed,
-                
+
             });
             //save new user to database
             const user = await newUser.save();
@@ -32,7 +32,7 @@ const authController = {
             user.cart = cart.id;
             await user.save();
             await cart.save();
-            
+
             await cart.save();
             return res.status(200).json(user);
         } catch (err) {
@@ -62,6 +62,70 @@ const authController = {
             { expiresIn: "365d" }
         );
     },
+    forgotPassword: async (req, res) => {
+        try {
+            const { email } = req.body;
+            console.log(req.body.email)
+            // Check if user exists
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            // Generate password reset token
+            const resetToken = jwt.sign({ id: user.id }, process.env.JWT_RESET_KEY, {
+                expiresIn: '30m',
+            });
+
+            // Save the reset token to the user
+            user.resetPasswordToken = resetToken;
+            user.resetPasswordExpires = Date.now() + 30 * 60 * 1000; // 30 minutes
+            await user.save();
+
+            // Send password reset email
+            await sendCodeResetPassword(email, resetToken, user.resetPasswordToken);
+
+            return res.status(200).json({ message: 'Password reset instructions sent to your email' });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+    resetPassword: async (req, res) => {
+        try {
+          const { token, password } = req.body;
+      
+          // Decode the token to get the user ID
+          const decodedToken = jwt.verify(token, process.env.JWT_RESET_KEY);
+          const userId = decodedToken.id;
+      
+          // Find the user by ID
+          const user = await User.findById(userId);
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+      
+          // Check if the token has expired
+          if (user.resetPasswordExpires < Date.now()) {
+            return res.status(400).json({ message: 'Token has expired' });
+          }
+      
+          // Hash the new password
+          const hashedPassword = await bcrypt.hash(password, 10);
+      
+          // Update the user's password
+          user.password = hashedPassword;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+          await user.save();
+      
+          return res.status(200).json({ message: 'Password reset successful' });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Internal server error' });
+        }
+      },
+
     //LOGIN
     loginUser: async (req, res) => {
         try {
@@ -92,7 +156,7 @@ const authController = {
     },
     // req refreshToken
     requestRefreshToken: async (req, res) => {
-        const {refreshToken} = req.cookies;
+        const { refreshToken } = req.cookies;
         if (!refreshToken) {
             return res.status(401).json({ message: 'You are not authenticated' });
         }
@@ -100,7 +164,7 @@ const authController = {
             return res.status(403).json({ message: 'Refresh token is not valid' });
         }
         jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
-            if(err) {
+            if (err) {
                 console.error(err);
             }
             refreshTokens = refreshTokens.filter(token => token !== refreshToken);
@@ -118,7 +182,7 @@ const authController = {
     },
     //logout
     logoutUser: async (req, res) => {
-        const {refreshToken} = req.cookies;
+        const { refreshToken } = req.cookies;
         refreshTokens = refreshTokens.filter(token => token !== refreshToken);
         res.clearCookie('refreshToken');
         return res.status(200).json({ message: 'Logged out' });
@@ -126,4 +190,3 @@ const authController = {
 }
 
 module.exports = authController;
-    

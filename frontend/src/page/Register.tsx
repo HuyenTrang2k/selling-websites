@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React from 'react';
 import { registerUser } from '../redux/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -21,7 +21,7 @@ const Register = () => {
       setTimeout(async () => {
         setIsLoading(false);
         if (await res) {
-          navigate('/login');
+          navigate(`/verify/${email}`);
         }
         else {
           setErr(res as unknown as string);
@@ -90,7 +90,7 @@ const Register = () => {
             </button>
 
             <div className='mt-5 text-xs border-b border-[#ffffff] py-4 text-[#ffffff]'>
-              <a href='#'>Forgot your password?</a>
+              <Link to ='/forgot-password'>Forgot your password?</Link>
             </div>
 
             <div className='mt-3 text-xs flex justify-between items-center text-[#ffffff]'>

@@ -42,7 +42,7 @@ mongoose.set('toJSON', {
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(morgan())
+app.use(morgan('common'));
 
 //routers
 app.use('/v1/category', categoryRoute);
